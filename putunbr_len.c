@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   putunbr_len.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shitakah <shitakah@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/08 00:14:27 by shitakah          #+#    #+#             */
-/*   Updated: 2025/10/29 01:59:28 by shitakah         ###   ########.fr       */
+/*   Created: 2025/10/27 23:35:02 by shitakah          #+#    #+#             */
+/*   Updated: 2025/10/29 01:52:52 by shitakah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <stdarg.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+int	putunbr_len(unsigned int n)
+{
+	char	digit;
+	int		len;
 
-int	ft_printf(const char *format, ...);
-int	putchar_len(char c);
-int	puthex_len(unsigned long long hex, int cs);
-int	putnbr_len(int n);
-int	putptr_len(unsigned long long hex, int flag);
-int	putstr_len(char *s);
-int	putunbr_len(unsigned int n);
-
-#endif
+	len = 0;
+	if (n == 0)
+	{
+		write(1, "0", 1);
+		len++;
+		return (len);
+	}
+	if (n >= 10)
+		len += putunbr_len(n / 10);
+	digit = (char)(n % 10 + '0');
+	write(1, &digit, 1);
+	len++;
+	return (len);
+}

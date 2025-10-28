@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   putnbr_len.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shitakah <shitakah@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/08 00:14:27 by shitakah          #+#    #+#             */
-/*   Updated: 2025/10/29 01:59:28 by shitakah         ###   ########.fr       */
+/*   Created: 2025/10/27 23:35:02 by shitakah          #+#    #+#             */
+/*   Updated: 2025/10/29 01:50:56 by shitakah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <stdarg.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+int	putnbr_len(int n)
+{
+	char		digit;
+	long long	lln;
+	int			len;
 
-int	ft_printf(const char *format, ...);
-int	putchar_len(char c);
-int	puthex_len(unsigned long long hex, int cs);
-int	putnbr_len(int n);
-int	putptr_len(unsigned long long hex, int flag);
-int	putstr_len(char *s);
-int	putunbr_len(unsigned int n);
-
-#endif
+	len = 0;
+	lln = (long long)n;
+	if (lln == 0)
+	{
+		write(1, "0", 1);
+		len++;
+		return (len);
+	}
+	if (lln < 0)
+	{
+		write(1, "-", 1);
+		lln *= -1;
+		len++;
+	}
+	if (lln >= 10)
+		len += putnbr_len(lln / 10);
+	digit = (char)(lln % 10 + '0');
+	write(1, &digit, 1);
+	len++;
+	return (len);
+}

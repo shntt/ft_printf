@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putstr_len.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shitakah <shitakah@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/08 00:14:27 by shitakah          #+#    #+#             */
-/*   Updated: 2025/10/29 01:59:28 by shitakah         ###   ########.fr       */
+/*   Created: 2025/10/29 01:49:27 by shitakah          #+#    #+#             */
+/*   Updated: 2025/10/29 01:49:30 by shitakah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <stdarg.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+int	putstr_len(char *s)
+{
+	int	len;
 
-int	ft_printf(const char *format, ...);
-int	putchar_len(char c);
-int	puthex_len(unsigned long long hex, int cs);
-int	putnbr_len(int n);
-int	putptr_len(unsigned long long hex, int flag);
-int	putstr_len(char *s);
-int	putunbr_len(unsigned int n);
-
-#endif
+	len = 0;
+	if (!s)
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
+	while (*s)
+	{
+		write(1, s++, 1);
+		len++;
+	}
+	return (len);
+}
