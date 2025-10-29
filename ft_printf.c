@@ -6,13 +6,13 @@
 /*   By: shitakah <shitakah@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 23:35:02 by shitakah          #+#    #+#             */
-/*   Updated: 2025/10/29 01:58:04 by shitakah         ###   ########.fr       */
+/*   Updated: 2025/10/29 15:09:03 by shitakah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	processf(va_list args, const char *format, int i, int count);
+static int	processf(va_list *args, const char *format, int i, int count);
 static int	check_type(va_list *args, const char *format, int i, int count);
 
 int	ft_printf(const char *format, ...)
@@ -23,7 +23,7 @@ int	ft_printf(const char *format, ...)
 	if (!format)
 		return (-1);
 	va_start(args, format);
-	count = processf(args, format, 0, 0);
+	count = processf(&args, format, 0, 0);
 	va_end(args);
 	return (count);
 }
@@ -55,14 +55,14 @@ static int	check_type(va_list *args, const char *format, int i, int count)
 	return (count);
 }
 
-static int	processf(va_list args, const char *format, int i, int count)
+static int	processf(va_list *args, const char *format, int i, int count)
 {
 	while (format[i])
 	{
 		if (format[i] == '%')
 		{
 			i++;
-			count += check_type(&args, format, i, 0);
+			count += check_type(args, format, i, 0);
 			if (format[i] != '\0')
 				i++;
 		}
