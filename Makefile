@@ -6,7 +6,7 @@
 #    By: shitakah <shitakah@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 23:42:17 by shitakah          #+#    #+#              #
-#    Updated: 2025/11/13 22:28:05 by shitakah         ###   ########.fr        #
+#    Updated: 2025/11/20 22:02:04 by shitakah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,10 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
-	rm -f $(OBJ) $(SOBJS)
+	rm -f $(OBJ)
 
 fclean: clean
-	rm -f $(NAME) libft.so
+	rm -f $(NAME)
 
 re: fclean all
 
