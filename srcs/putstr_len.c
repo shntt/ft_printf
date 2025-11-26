@@ -6,7 +6,7 @@
 /*   By: shitakah <shitakah@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 01:49:27 by shitakah          #+#    #+#             */
-/*   Updated: 2025/11/20 21:59:35 by shitakah         ###   ########.fr       */
+/*   Updated: 2025/11/26 21:01:01 by shitakah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,15 @@ int	putstr_len(char *s)
 	len = 0;
 	if (!s)
 	{
-		write(1, "(null)", 6);
+		if (write(1, "(null)", 6) == -1)
+			return (-1);
 		return (6);
 	}
 	while (*s)
 	{
-		write(1, s++, 1);
+		if (write(1, s, 1) == -1)
+			return (-1);
+		s++;
 		len++;
 	}
 	return (len);

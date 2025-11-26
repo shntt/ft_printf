@@ -6,36 +6,45 @@
 /*   By: shitakah <shitakah@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 23:35:02 by shitakah          #+#    #+#             */
-/*   Updated: 2025/11/20 21:59:29 by shitakah         ###   ########.fr       */
+/*   Updated: 2025/11/26 23:16:37 by shitakah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+static int	write_positive(long long lln, int len)
+{
+	int		tmp;
+	char	digit;
+
+	if (lln >= 10)
+	{
+		tmp = putnbr_len(lln / 10);
+		if (tmp == -1)
+			return (-1);
+		len += tmp;
+	}
+	digit = (char)(lln % 10 + '0');
+	if (write(1, &digit, 1) == -1)
+		return (-1);
+	return (len + 1);
+}
+
 int	putnbr_len(int n)
 {
-	char		digit;
 	long long	lln;
 	int			len;
 
-	len = 0;
 	lln = (long long)n;
 	if (lln == 0)
-	{
-		write(1, "0", 1);
-		len++;
-		return (len);
-	}
+		return (write(1, "0", 1));
+	len = 0;
 	if (lln < 0)
 	{
-		write(1, "-", 1);
+		if (write(1, "-", 1) == -1)
+			return (-1);
 		lln *= -1;
-		len++;
+		len = 1;
 	}
-	if (lln >= 10)
-		len += putnbr_len(lln / 10);
-	digit = (char)(lln % 10 + '0');
-	write(1, &digit, 1);
-	len++;
-	return (len);
+	return (write_positive(lln, len));
 }
